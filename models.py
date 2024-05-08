@@ -1,5 +1,5 @@
 from sqlalchemy import Column, String, Date
-from .db import Base
+from db import Base
 
 class Vehiculo(Base):
     __tablename__ = "vehiculos"
@@ -11,3 +11,4 @@ class Vehiculo(Base):
     patente = Column(String, unique=True, index=True)
     aseguradora = Column(String)
     vencimiento_poliza = Column(Date)
+

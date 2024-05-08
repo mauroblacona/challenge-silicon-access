@@ -1,0 +1,8 @@
+venv
+.venv
+secret.py
+__pycache__
+secret.json
+scratch_*
+.env
+.idea/
