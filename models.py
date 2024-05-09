@@ -1,14 +1,14 @@
-from sqlalchemy import Column, String, Date
 from db import Base
+from sqlalchemy import Column, Integer, String, Date
 
 class Vehiculo(Base):
     __tablename__ = "vehiculos"
-    id = Column(String, primary_key=True, index=True)
-    tipo = Column(String, index=True)
-    marca = Column(String)
-    modelo = Column(String)
-    color = Column(String)
-    patente = Column(String, unique=True, index=True)
-    aseguradora = Column(String)
-    vencimiento_poliza = Column(Date)
 
+    id = Column(Integer,primary_key=True,nullable=False, autoincrement=True)
+    tipo = Column(String,nullable=False)
+    marca = Column(String,nullable=False)
+    modelo = Column(String,nullable=False)
+    color = Column(String,nullable=False)
+    patente = Column(String,nullable=False, unique=True)
+    aseguradora = Column(String,nullable=False)
+    vencimiento_poliza = Column(Date, nullable=False)
