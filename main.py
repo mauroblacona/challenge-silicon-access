@@ -5,19 +5,13 @@ from sqlalchemy import func
 import models
 import schemas
 from models import Vehiculo
-from db import engine, SessionLocal
+from db import engine, SessionLocal, get_db
 
 app = FastAPI()
 
 
 models.Base.metadata.create_all(bind=engine)
 
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
 
 @app.get("/vehiculos", status_code=status.HTTP_200_OK)
 def listar_vehiculos(db: Session = Depends(get_db)):
