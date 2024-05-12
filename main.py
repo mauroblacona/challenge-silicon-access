@@ -1,12 +1,14 @@
 from fastapi import FastAPI, Depends, status, HTTPException
 from typing import List
 from sqlalchemy.orm import Session
+from sqlalchemy import func
 import models
 import schemas
 from models import Vehiculo
 from db import engine, SessionLocal
 
 app = FastAPI()
+
 
 models.Base.metadata.create_all(bind=engine)
 
@@ -90,3 +92,12 @@ def eliminar_vehiculo(id:int, db:Session = Depends(get_db)):
     db.commit()
     
     return vehiculo_eliminado.first(), {"message": "Vehículo eliminado exitosamente"}
+
+@app.get('/vehiculos/cantidad/{atributo}', status_code=status.HTTP_200_OK)
+def contar_vehiculos(atributo: str, db: Session = Depends(get_db)):
+    if not hasattr(models.Vehiculo, atributo):
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=f"El atributo '{atributo}' no es válido.")
+    
+    contar_vehiculos = db.query(getattr(models.Vehiculo, atributo), func.count(models.Vehiculo.id)).group_by(getattr(models.Vehiculo, atributo)).all()
+
+    return [{item[0]: item[1]} for item in contar_vehiculos]
