@@ -1,10 +1,14 @@
+import os
 from fastapi import HTTPException, Depends
 from fastapi.security import OAuth2PasswordBearer
 from jose import JWTError, jwt
 from datetime import datetime, timedelta
+from dotenv import load_dotenv
 
+load_dotenv()
 # Esta es la clave secreta y el hash utilizado para firmar el token, con los minutos de expiracion.
-SECRET_KEY = "m1cl4v3s3cr3t4"
+SECRET_KEY = os.getenv("SECRET_KEY")
+
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 60
 
