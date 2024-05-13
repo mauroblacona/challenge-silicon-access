@@ -13,7 +13,7 @@ app = FastAPI()
 
 models.Base.metadata.create_all(bind=engine)
 
-
+#Endpoint para generacion de token.
 @app.post("/token", status_code=status.HTTP_200_OK)
 def login_for_access_token():
     # Metodo de acceso basico solo por generacion de token, sin modelo de usuario ni validaciones.
@@ -22,10 +22,12 @@ def login_for_access_token():
     )
     return {"access_token": access_token, "token_type": "bearer"}
 
+#Endpoint para obtener un listado de los vehiculos almacenados en nuestra base de datos.
 @app.get("/vehiculos", status_code=status.HTTP_200_OK)
 def listar_vehiculos(db: Session = Depends(get_db), current_user: dict = Depends(get_current_user)):
     return db.query(Vehiculo).all()
 
+#Endpoint para obtener el detalle de cada vehiculo mediante su id numerico.
 @app.get('/vehiculos/{id}', response_model=schemas.CreateVehiculo, status_code=status.HTTP_200_OK)
 def detalle_vehiculo(id:int ,db:Session = Depends(get_db), current_user: dict = Depends(get_current_user)):
 
@@ -35,6 +37,7 @@ def detalle_vehiculo(id:int ,db:Session = Depends(get_db), current_user: dict = 
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=f"El vehiculo con id: {id} no existe en nuestra base de datos.")
     return id_vehiculo
 
+#Endpoint para crear 1 vehiculo.
 @app.post('/vehiculos', status_code=status.HTTP_201_CREATED, response_model=List[schemas.CreateVehiculo])
 def crear_vehiculo(vehiculo:schemas.CreateVehiculo, db:Session = Depends(get_db), current_user: dict = Depends(get_current_user)):
     
@@ -49,6 +52,7 @@ def crear_vehiculo(vehiculo:schemas.CreateVehiculo, db:Session = Depends(get_db)
 
     return [nuevo_vehiculo]
 
+#Endpoint para crear mas de 1 vehiculo a la vez.
 @app.post('/vehiculos_bulk', status_code=status.HTTP_201_CREATED, response_model=List[schemas.CreateVehiculo])
 def crear_vehiculos(vehiculos: List[schemas.CreateVehiculo], db: Session = Depends(get_db), current_user: dict = Depends(get_current_user)):
     nuevos_vehiculos = []
@@ -65,6 +69,7 @@ def crear_vehiculos(vehiculos: List[schemas.CreateVehiculo], db: Session = Depen
 
     return nuevos_vehiculos
 
+#Endpoint para actualizar 1 vehiculo mediante su id numerico.
 @app.put('/vehiculos/{id}', response_model=schemas.CreateVehiculo)
 def actualizar_vehiculo(id: int, actualizar_vehiculo: schemas.VehiculoUpdate, db: Session = Depends(get_db), current_user: dict = Depends(get_current_user)):
 
@@ -83,6 +88,7 @@ def actualizar_vehiculo(id: int, actualizar_vehiculo: schemas.VehiculoUpdate, db
 
     return vehiculo_actualizado, {"message": "Vehículo modificado exitosamente"}
 
+#Endpoint para eliminar un vehiculo mediante su id numerico.
 @app.delete('/vehiculos/{id}', status_code=status.HTTP_204_NO_CONTENT)
 def eliminar_vehiculo(id:int, db:Session = Depends(get_db), current_user: dict = Depends(get_current_user)):
 
@@ -96,6 +102,7 @@ def eliminar_vehiculo(id:int, db:Session = Depends(get_db), current_user: dict =
     
     return vehiculo_eliminado.first(), {"message": "Vehículo eliminado exitosamente"}
 
+#Endpoint para contar la cantidad de vehiculos mediante el atributo elegido, en este caso todos los de la tabla (marca, modelo, color, etc).
 @app.get('/vehiculos/cantidad/{atributo}', status_code=status.HTTP_200_OK)
 def contar_vehiculos(atributo: str, db: Session = Depends(get_db), current_user: dict = Depends(get_current_user)):
     if not hasattr(models.Vehiculo, atributo):
