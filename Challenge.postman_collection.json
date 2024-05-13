@@ -1,0 +1,252 @@
+{
+	"info": {
+		"_postman_id": "340fd5e6-2563-4b0e-b1ed-a500f62b2771",
+		"name": "Challenge",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "10564554"
+	},
+	"item": [
+		{
+			"name": "Token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"pm.collectionVariables.set(\"fihogar_token\", jsonData.access_token);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": []
+				},
+				"url": "http://localhost:8000/token"
+			},
+			"response": []
+		},
+		{
+			"name": "Crear Vehiculo",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"pm.collectionVariables.set(\"fihogar_token\", jsonData.access_token);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"tipo\": \"string\",\n  \"marca\": \"string\",\n  \"modelo\": \"string\",\n  \"color\": \"string\",\n  \"patente\": \"string\",\n  \"aseguradora\": \"string\",\n  \"vencimiento_poliza\": \"2024-05-13\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8000/vehiculos"
+			},
+			"response": []
+		},
+		{
+			"name": "Crear Vehiculos Bulk",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"pm.collectionVariables.set(\"fihogar_token\", jsonData.access_token);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\n    {\n    \"tipo\": \"string\",\n    \"marca\": \"string\",\n    \"modelo\": \"string\",\n    \"color\": \"string\",\n    \"patente\": \"string\",\n    \"aseguradora\": \"string\",\n    \"vencimiento_poliza\": \"2024-05-13\"\n    },\n    {\n    \"tipo\": \"string\",\n    \"marca\": \"string\",\n    \"modelo\": \"string\",\n    \"color\": \"string\",\n    \"patente\": \"string\",\n    \"aseguradora\": \"string\",\n    \"vencimiento_poliza\": \"2024-05-13\"\n    }\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8000/vehiculos_bulk"
+			},
+			"response": []
+		},
+		{
+			"name": "Modificar Vehiculo",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"pm.collectionVariables.set(\"fihogar_token\", jsonData.access_token);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"color\": \"string\",\n  \"aseguradora\": \"string\",\n  \"vencimiento_poliza\": \"2024-05-13\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8000/vehiculos/2"
+			},
+			"response": []
+		},
+		{
+			"name": "Eliminar Vehiculo",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"pm.collectionVariables.set(\"fihogar_token\", jsonData.access_token);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer",
+						"type": "text"
+					}
+				],
+				"url": "http://localhost:8000/vehiculos/2"
+			},
+			"response": []
+		},
+		{
+			"name": "Lista de Vehiculos",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJleGFtcGxldXNlciIsImV4cCI6MTcxNTYzMTE1MX0.X5Li2ZWGF_gK3KhTaEZdp1O7rhe4k6tbDU8cDPfgB-s",
+						"type": "text"
+					}
+				],
+				"url": "http://localhost:8000/vehiculos"
+			},
+			"response": []
+		},
+		{
+			"name": "Cantidad Vehiculos",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJleGFtcGxldXNlciIsImV4cCI6MTcxNTYzMTE1MX0.X5Li2ZWGF_gK3KhTaEZdp1O7rhe4k6tbDU8cDPfgB-s",
+						"type": "text"
+					}
+				],
+				"url": "http://localhost:8000/vehiculos/cantidad/marca"
+			},
+			"response": []
+		},
+		{
+			"name": "Detalle Vehiculo",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJleGFtcGxldXNlciIsImV4cCI6MTcxNTYzMTE1MX0.X5Li2ZWGF_gK3KhTaEZdp1O7rhe4k6tbDU8cDPfgB-s",
+						"type": "text"
+					}
+				],
+				"url": "http://localhost:8000/vehiculos/2"
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "fihogar_token",
+			"value": ""
+		}
+	]
+}
